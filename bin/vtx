@@ -33,7 +33,6 @@ CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/vtx"
 PACMAN_CONF="${VTX_PACMAN_CONF:-/etc/pacman.conf}"
 PACMAN_LOCK="${VTX_PACMAN_LOCK:-/var/lib/pacman/db.lck}"
 VITRA_ETC="${VTX_VITRA_ETC:-/etc/vitra}"
-VITRA_FIX_DIR="${VTX_FIX_DIR:-/usr/share/vitra/fix}"
 
 VITRA_REPO_NAME="vitra"
 VITRA_REPO_URL='https://github.com/femboyss/vitra-repo/releases/download/$arch'
@@ -87,6 +86,7 @@ main() {
         -Q*|-F*|-D*|-T*|-U*)     cmd_passthrough "$cmd" "$@" ;;
         components|comp|c)       cmd_components "$@" ;;
         fix)                     cmd_fix "$@" ;;
+        deploy)                  cmd_deploy "$@" ;;
         repo)                    cmd_repo "$@" ;;
         doctor|dr)               cmd_doctor "$@" ;;
         profile)                 cmd_profile "$@" ;;

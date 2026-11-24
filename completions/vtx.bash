@@ -2,7 +2,7 @@
 _vtx() {
     local cur=${COMP_WORDS[COMP_CWORD]} prev=${COMP_WORDS[1]:-}
     if (( COMP_CWORD == 1 )); then
-        COMPREPLY=($(compgen -W "-S -Syu -Ss -Si -R -Rs -Q install remove search info update components fix profile repo doctor lang clean help --version" -- "$cur"))
+        COMPREPLY=($(compgen -W "-S -Syu -Ss -Si -R -Rs -Q install remove search info update components fix deploy profile repo doctor lang clean help --version" -- "$cur"))
         return
     fi
     case $prev in

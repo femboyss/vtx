@@ -13,6 +13,7 @@ vtx -Si vtx               package info
 vtx -R firefox            remove
 vtx components            all Vitra components and their status
 vtx fix glassy-shell      reinstall a component and repair its config
+vtx deploy                set up installed components in your home folder (runs by itself)
 vtx profile windows       linux | windows | mac  (keys and mouse style)
 vtx repo add              put [vitra] into /etc/pacman.conf
 vtx doctor                check that everything works
@@ -52,8 +53,11 @@ ASSUME_YES="no"           # yes = like --noconfirm
 
 ## For component authors
 
-- `/usr/share/vitra/fix/<pkgname>.sh` (executable): run by `vtx fix <pkgname>` after reinstalling,
-  as the normal user, to repair that user's config.
+- `/usr/share/vitra/deploy/<pkgname>.sh` (executable): the per-user setup step (copy configs
+  into `~/.config` and so on). vtx runs it as the normal user, never as root:
+  `install` the first time, `upgrade` when the package version changed, `fix` for `vtx fix <pkgname>`.
+  vtx remembers the deployed version in `~/.local/state/vitra/deployed/<pkgname>`, so after a plain
+  `pacman -Syu` the next `vtx deploy` (or `vtx deploy --quiet` at login) catches up.
 - `/usr/share/vitra/profile.d/*` (executable): called with `linux`, `windows` or `mac`
   when the user runs `vtx profile ...`.
 - The current profile is in `~/.config/vitra/profile` (`PROFILE="windows"`).

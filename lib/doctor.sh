@@ -64,6 +64,7 @@ ${C_BOLD}Vitra${C_RESET}
   vtx components install X  $(t "install a component")
   vtx components remove X   $(t "remove a component")
   vtx fix <component>       $(t "reinstall a component and repair its config")
+  vtx deploy [--all]        $(t "set up components in your home folder (runs by itself)")
   vtx profile [linux|windows|mac]
                             $(t "keyboard and mouse style")
   vtx repo [add|remove|status]

@@ -127,3 +127,10 @@ Look at the PKGBUILD of %s before building?	PKGBUILD von %s vor dem Bauen ansehe
 Build %s?	%s bauen?
 Update %s AUR package(s)?	%s AUR-Paket(e) aktualisieren?
 Delete the AUR build cache (%s)?	AUR-Build-Cache löschen (%s)?
+set up components in your home folder (runs by itself)	Komponenten in deinem Home-Ordner einrichten (läuft von selbst)
+skipping the setup of %s for root, run vtx deploy as your normal user	überspringe die Einrichtung von %s für root, starte vtx deploy als normaler Benutzer
+setting up %s for %s	richte %s für %s ein
+%s is set up	%s ist eingerichtet
+the setup of %s reported a problem (try: vtx fix %s)	die Einrichtung von %s meldet ein Problem (versuch: vtx fix %s)
+everything is set up	alles ist eingerichtet
+%s has no setup step	%s hat keinen Einrichtungsschritt

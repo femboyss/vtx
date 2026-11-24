@@ -92,6 +92,34 @@ check "profile saved" grep -q 'PROFILE="windows"' "$XDG_CONFIG_HOME/vitra/profil
 out=$("$VTX" profile); check "profile read back" contains "$out" "windows"
 "$VTX" profile banana >/dev/null 2>&1; check "bad profile rejected" test $? -ne 0
 
+echo "== deploy (per-user setup after install)"
+export VTX_DEPLOY_DIR="$T/deploy"
+mkdir -p "$VTX_DEPLOY_DIR"
+printf '#!/usr/bin/env bash\necho "hook $1" >>"%s/hook.log"\n' "$T" >"$VTX_DEPLOY_DIR/glassy-shell.sh"
+chmod +x "$VTX_DEPLOY_DIR/glassy-shell.sh"
+echo "glassy-shell 1.0-1" >>"$FAKE_INSTALLED"
+"$VTX" deploy >/dev/null 2>&1
+check "first deploy runs with install" grep -qx "hook install" "$T/hook.log"
+check "deployed version remembered"   grep -qx "1.0-1" "$HOME/.local/state/vitra/deployed/glassy-shell"
+: >"$T/hook.log"
+"$VTX" deploy >/dev/null 2>&1
+check "nothing to do the second time" test ! -s "$T/hook.log"
+sed -i 's/^glassy-shell 1.0-1$/glassy-shell 1.1-1/' "$FAKE_INSTALLED"
+"$VTX" deploy >/dev/null 2>&1
+check "new version -> upgrade"        grep -qx "hook upgrade" "$T/hook.log"
+: >"$T/hook.log"
+"$VTX" -y fix glassy-shell >/dev/null 2>&1
+check "vtx fix always deploys (fix)"  grep -qx "hook fix" "$T/hook.log"
+: >"$T/hook.log"
+printf 'glassy-shell\n' >>"$FAKE_REPO"
+sed -i 's/^glassy-shell 1.1-1$/glassy-shell 1.2-1/' "$FAKE_INSTALLED"
+"$VTX" -y -S glassy-shell >/dev/null 2>&1
+check "vtx -S runs the deploy step"   grep -qx "hook upgrade" "$T/hook.log"
+: >"$T/hook.log"
+sed -i 's/^glassy-shell 1.2-1$/glassy-shell 1.3-1/' "$FAKE_INSTALLED"
+"$VTX" -y >/dev/null 2>&1
+check "vtx (update) runs the deploy step" grep -qx "hook upgrade" "$T/hook.log"
+
 echo "== helpers"
 set +u
 VTX_SHARE="$ROOT/share" CONFIG_FILE=/dev/null CACHE_DIR="$T/c" PACMAN_LOCK="$VTX_PACMAN_LOCK"

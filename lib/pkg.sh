@@ -9,6 +9,7 @@ cmd_update() {
     section "Updating packages from the repos"
     wait_for_lock
     pac_root -Syu "${extra[@]}" || die "the system update failed, nothing from the AUR was touched"
+    deploy_run_pending quiet
 
     [[ $AUR_ENABLED == yes ]] || { ok "system is up to date"; return 0; }
 
@@ -26,7 +27,7 @@ cmd_update() {
     done <<<"$lines"
     echo
     ask "$(tf "Update %s AUR package(s)?" "${#n[@]}")" y || return 0
-    aur_install "${n[@]}" && ok "system is up to date"
+    aur_install "${n[@]}" && deploy_run_pending quiet && ok "system is up to date"
 }
 
 # split names into repo packages and AUR packages
@@ -62,6 +63,7 @@ cmd_install() {
     if (( ${#AUR_PKGS[@]} )); then
         aur_install "${AUR_PKGS[@]}" || die "installing from the AUR failed"
     fi
+    deploy_run_pending quiet
     ok_f "installed: %s" "${names[*]}"
 }
 

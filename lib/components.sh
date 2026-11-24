@@ -8,7 +8,8 @@ cmd_components() {
     [[ $# -gt 0 ]] && shift
     case $sub in
         list|ls|"")          components_list ;;
-        install|add)         (( $# )) || die "which component?"; wait_for_lock; pac_root -S --needed "${@/#/$VITRA_REPO_NAME/}" ;;
+        install|add)         (( $# )) || die "which component?"; wait_for_lock
+                             pac_root -S --needed "${@/#/$VITRA_REPO_NAME/}" && deploy_run_pending quiet ;;
         remove|rm)           (( $# )) || die "which component?"; wait_for_lock; pac_root -Rs "$@" ;;
         reinstall|fix)       cmd_fix "$@" ;;
         *) die "usage: vtx components [list|install|remove|reinstall] [name...]" ;;
@@ -40,21 +41,16 @@ components_list() {
     (( total )) || msg "no packages in [vitra] yet (or run: sudo pacman -Sy)"
 }
 
-# vtx fix name... : reinstall + run the component's repair hook if it has one
+# vtx fix name... : reinstall the package, then run its setup step again
 cmd_fix() {
     (( $# )) || die "fix what? Example: vtx fix glassy-shell"
-    local p hook
+    local p
     for p in "$@"; do
-        pacman -Q -- "$p" >/dev/null 2>&1 || { warn_f "%s is not installed, installing it" "$p"; }
+        pacman -Q -- "$p" >/dev/null 2>&1 || warn_f "%s is not installed, installing it" "$p"
         msg_f "reinstalling %s" "$p"
         wait_for_lock
         pac_root -S "$p" || { warn_f "could not reinstall %s" "$p"; continue; }
-        # components can ship /usr/share/vitra/fix/<name>.sh to repair user configs
-        hook="$VITRA_FIX_DIR/$p.sh"
-        if [[ -x $hook ]]; then
-            msg_f "running the repair step of %s" "$p"
-            "$hook" || warn_f "the repair step of %s reported a problem" "$p"
-        fi
+        deploy_one "$p" fix || continue
         ok_f "%s repaired" "$p"
     done
 }

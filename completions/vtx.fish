@@ -1,5 +1,5 @@
 # fish completion for vtx - (c) 2026 34 & Claude
-set -l cmds -S -Syu -Ss -Si -R -Rs install remove search info update components fix profile repo doctor lang clean help
+set -l cmds -S -Syu -Ss -Si -R -Rs install remove search info update components fix deploy profile repo doctor lang clean help
 complete -c vtx -f
 complete -c vtx -n "not __fish_seen_subcommand_from $cmds" -a "$cmds"
 complete -c vtx -n "__fish_seen_subcommand_from profile" -a "linux windows mac"
