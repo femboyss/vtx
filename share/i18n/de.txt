@@ -1,0 +1,129 @@
+# vtx German messages: English<TAB>Deutsch, one per line.
+# Missing lines stay English. Keep %s placeholders in the same order.
+warning:	Warnung:
+error:	Fehler:
+[Y/n]	[J/n]
+[y/N]	[j/N]
+installed	installiert
+out of date	veraltet
+Component	Komponente
+Installed	Installiert
+Available	Verfügbar
+Status	Status
+not installed	nicht installiert
+update available	Update verfügbar
+%s components, %s installed, %s with updates	%s Komponenten, %s installiert, %s mit Updates
+%s is not installed, installing it	%s ist nicht installiert, wird installiert
+%s packages available in [vitra]	%s Pakete in [vitra] verfügbar
+%s problem(s) found	%s Problem(e) gefunden
+%s repaired	%s repariert
+AUR build cache deleted	AUR-Build-Cache gelöscht
+AUR packages to build:	AUR-Pakete, die gebaut werden:
+AUR reachable	AUR erreichbar
+Checking AUR packages	Prüfe AUR-Pakete
+Continue?	Weiter?
+Options	Optionen
+Packages	Pakete
+Packages online:	Pakete online:
+Remove [vitra] from pacman.conf? Vitra packages will stop updating.	[vitra] aus pacman.conf entfernen? Vitra-Pakete bekommen dann keine Updates mehr.
+Remove old package versions from the pacman cache (keep the last 2)?	Alte Paketversionen aus dem pacman-Cache löschen (die letzten 2 bleiben)?
+Updating packages from the repos	Aktualisiere Pakete aus den Repos
+[vitra] is NOT in pacman.conf (fix: vtx repo add)	[vitra] ist NICHT in pacman.conf (Fix: vtx repo add)
+[vitra] is already in pacman.conf	[vitra] ist schon in pacman.conf
+[vitra] is in pacman.conf	[vitra] ist in pacman.conf
+[vitra] is not in pacman.conf	[vitra] ist nicht in pacman.conf
+[vitra] package list downloaded	[vitra]-Paketliste heruntergeladen
+[vitra] removed from pacman.conf	[vitra] aus pacman.conf entfernt
+[vitra] repo in pacman.conf	[vitra]-Repo in pacman.conf
+[vitra] was added by hand, please remove it yourself from %s	[vitra] wurde von Hand eingetragen, bitte selbst aus %s entfernen
+added. Backup of the old file: %s	eingetragen. Backup der alten Datei: %s
+adding [vitra] to %s	trage [vitra] in %s ein
+browse them: %s	ansehen: %s
+building %s failed (folder: %s)	Bauen von %s fehlgeschlagen (Ordner: %s)
+building %s from the AUR	baue %s aus dem AUR
+change it with: vtx lang auto | en | de	ändern mit: vtx lang auto | en | de
+change it with: vtx profile linux | windows | mac	ändern mit: vtx profile linux | windows | mac
+check that everything works	prüfen, ob alles funktioniert
+clean AUR build cache and old packages	AUR-Build-Cache und alte Pakete aufräumen
+could not back up pacman.conf	konnte pacman.conf nicht sichern
+could not download %s from the AUR	konnte %s nicht aus dem AUR laden
+could not reach the AUR	AUR nicht erreichbar
+could not reach the AUR (%s)	AUR nicht erreichbar (%s)
+could not reach the AUR, skipped AUR updates	AUR nicht erreichbar, AUR-Updates übersprungen
+could not reinstall %s	konnte %s nicht neu installieren
+could not write pacman.conf	konnte pacman.conf nicht schreiben
+current profile: %s	aktuelles Profil: %s
+do not ask, take the default answers	nicht fragen, Standardantworten nehmen
+do not build AUR packages as root, run vtx as your normal user	AUR-Pakete nicht als root bauen, starte vtx als normaler Benutzer
+everything looks good	alles in Ordnung
+fix [vitra]: vtx repo add	[vitra] reparieren: vtx repo add
+fix base-devel: sudo pacman -S --needed base-devel	base-devel reparieren: sudo pacman -S --needed base-devel
+fix what? Example: vtx fix glassy-shell	was reparieren? Beispiel: vtx fix glassy-shell
+git installed (needed for the AUR)	git installiert (nötig fürs AUR)
+git is missing: sudo pacman -S git	git fehlt: sudo pacman -S git
+info about what? Example: vtx -Si vtx	Info zu was? Beispiel: vtx -Si vtx
+install a component	Komponente installieren
+install from [vitra], Arch repos or the AUR	installieren aus [vitra], Arch-Repos oder AUR
+installed: %s	installiert: %s
+installing %s failed	Installation von %s fehlgeschlagen
+installing from the AUR failed	Installation aus dem AUR fehlgeschlagen
+installing from the repos failed	Installation aus den Repos fehlgeschlagen
+jq installed	jq installiert
+keyboard and mouse style	Tastatur- und Maus-Stil
+keys: Command instead of Super, mac mouse icons	Tasten: Command statt Super, Mac-Maussymbole
+keys: Super, Linux defaults	Tasten: Super, Linux-Standard
+keys: Windows key instead of Super, Ctrl+Win opens the overview, Ctrl+Esc = Windows key	Tasten: Windows-Taste statt Super, Strg+Win öffnet die Übersicht, Strg+Esc = Windows-Taste
+language	Sprache
+language set to %s	Sprache auf %s gestellt
+language: %s (setting: %s)	Sprache: %s (Einstellung: %s)
+languages: auto, en, de	Sprachen: auto, en, de
+last full system update: %s	letztes komplettes Systemupdate: %s
+list all Vitra components and their status	alle Vitra-Komponenten mit Status anzeigen
+makepkg built nothing usable for %s	makepkg hat für %s nichts Brauchbares gebaut
+makepkg installed (base-devel)	makepkg installiert (base-devel)
+makepkg is missing: sudo pacman -S base-devel	makepkg fehlt: sudo pacman -S base-devel
+manage [vitra] in pacman.conf	[vitra] in pacman.conf verwalten
+need root: install sudo or run as root	brauche root: installiere sudo oder starte als root
+no colors	keine Farben
+no packages in [vitra] yet (or run: sudo pacman -Sy)	noch keine Pakete in [vitra] (oder: sudo pacman -Sy)
+nobody provides %s (needed by %s)	niemand stellt %s bereit (gebraucht von %s)
+not found in the repos or the AUR: %s	weder in den Repos noch im AUR gefunden: %s
+not running as root	läuft nicht als root
+package info	Paketinfo
+package not found: %s	Paket nicht gefunden: %s
+pacman is busy (another install running?), waiting...	pacman ist beschäftigt (läuft noch eine Installation?), warte...
+pacman is installed	pacman ist installiert
+pacman is not locked	pacman ist nicht gesperrt
+pacman lock still there after 3 minutes: %s	pacman-Sperre nach 3 Minuten immer noch da: %s
+passed straight to pacman	direkt an pacman weitergegeben
+profile set to %s	Profil auf %s gestellt
+profiles: linux, windows, mac	Profile: linux, windows, mac
+reinstall a component and repair its config	Komponente neu installieren und Config reparieren
+reinstalling %s	installiere %s neu
+remove (vtx remove = -Rs)	entfernen (vtx remove = -Rs)
+remove a component	Komponente entfernen
+remove what? Example: vtx -R firefox	was entfernen? Beispiel: vtx -R firefox
+resolving AUR dependencies...	löse AUR-Abhängigkeiten auf...
+running the repair step of %s	starte den Reparaturschritt von %s
+same as -S	wie -S
+search for what? Example: vtx -Ss browser	wonach suchen? Beispiel: vtx -Ss browser
+search repos and AUR	Repos und AUR durchsuchen
+skipped %s	%s übersprungen
+system is up to date	System ist aktuell
+the Vitra package manager	der Vitra-Paketmanager
+the [vitra] repo is not in pacman.conf, Vitra packages will not update. Fix: vtx repo add	das [vitra]-Repo fehlt in pacman.conf, Vitra-Pakete bekommen keine Updates. Fix: vtx repo add
+the [vitra] repo is not in pacman.conf. Fix: vtx repo add	das [vitra]-Repo fehlt in pacman.conf. Fix: vtx repo add
+the repair step of %s reported a problem	der Reparaturschritt von %s meldet ein Problem
+the system update failed, nothing from the AUR was touched	das Systemupdate ist fehlgeschlagen, am AUR wurde nichts angefasst
+tip: install pacman-contrib for paccache (cleans the pacman cache)	Tipp: installiere pacman-contrib für paccache (räumt den pacman-Cache auf)
+unknown option: %s (see: vtx --help)	unbekannte Option: %s (siehe: vtx --help)
+update everything (repos + AUR)	alles aktualisieren (Repos + AUR)
+usage: vtx components [list|install|remove|reinstall] [name...]	Benutzung: vtx components [list|install|remove|reinstall] [name...]
+usage: vtx repo [add|remove|status]	Benutzung: vtx repo [add|remove|status]
+vitra-repo reachable on GitHub	vitra-repo auf GitHub erreichbar
+what should I install? Example: vtx -S firefox	was soll ich installieren? Beispiel: vtx -S firefox
+which component?	welche Komponente?
+Look at the PKGBUILD of %s before building?	PKGBUILD von %s vor dem Bauen ansehen?
+Build %s?	%s bauen?
+Update %s AUR package(s)?	%s AUR-Paket(e) aktualisieren?
+Delete the AUR build cache (%s)?	AUR-Build-Cache löschen (%s)?

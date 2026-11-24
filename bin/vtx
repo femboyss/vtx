@@ -1,0 +1,107 @@
+#!/usr/bin/env bash
+# vtx: the Vitra package manager
+# (c) 2026 34 & Claude - GPL-3.0-or-later
+# https://github.com/femboyss/vtx
+#
+# Installs from the official Arch repos, the [vitra] repo and the AUR,
+# manages Vitra components and the [vitra] entry in pacman.conf.
+# This file is only the entry point, the commands live in /usr/lib/vtx.
+
+set -o pipefail
+
+# Filled in by `make install`. Empty means we run from a git checkout.
+VTX_VERSION=""
+VTX_PREFIX=""
+
+VTX_BIN=$(readlink -f -- "${BASH_SOURCE[0]}")
+if [[ -n $VTX_PREFIX ]]; then
+    VTX_LIB="$VTX_PREFIX/lib/vtx"
+    VTX_SHARE="$VTX_PREFIX/share/vtx"
+else
+    VTX_ROOT=$(dirname "$(dirname "$VTX_BIN")")
+    VTX_LIB="$VTX_ROOT/lib"
+    VTX_SHARE="$VTX_ROOT/share"
+    VTX_VERSION=$(tr -d '[:space:]' <"$VTX_ROOT/VERSION" 2>/dev/null)
+fi
+VTX_VERSION=${VTX_VERSION:-unknown}
+
+CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/vtx"
+CONFIG_FILE="$CONFIG_DIR/config"
+CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/vtx"
+
+# System paths, overridable for tests
+PACMAN_CONF="${VTX_PACMAN_CONF:-/etc/pacman.conf}"
+PACMAN_LOCK="${VTX_PACMAN_LOCK:-/var/lib/pacman/db.lck}"
+VITRA_ETC="${VTX_VITRA_ETC:-/etc/vitra}"
+VITRA_FIX_DIR="${VTX_FIX_DIR:-/usr/share/vitra/fix}"
+
+VITRA_REPO_NAME="vitra"
+VITRA_REPO_URL='https://github.com/femboyss/vitra-repo/releases/download/$arch'
+VITRA_WEB="https://femboyss.github.io/vitra-web"
+AUR_URL="${VTX_AUR_URL:-https://aur.archlinux.org}"
+
+if [[ ! -r $VTX_LIB/core.sh ]]; then
+    printf 'vtx: cannot find its modules in %s\n' "$VTX_LIB" >&2
+    exit 1
+fi
+
+# shellcheck source=../lib/core.sh
+source "$VTX_LIB/core.sh"
+for _module in "$VTX_LIB"/*.sh; do
+    [[ $_module == */core.sh ]] && continue
+    # shellcheck source=/dev/null
+    source "$_module"
+done
+unset _module
+
+main() {
+    # global flags that can stand anywhere
+    local args=() a
+    for a in "$@"; do
+        case $a in
+            --noconfirm|-y|--yes) VTX_YES=1 ;;
+            --no-color) C_RESET="" C_BOLD="" C_DIM="" C_RED="" C_GREEN="" C_YELLOW="" C_BLUE="" C_MAGENTA="" C_CYAN="" ;;
+            *) args+=("$a") ;;
+        esac
+    done
+    set -- "${args[@]}"
+
+    local cmd=${1:-}
+    [[ $# -gt 0 ]] && shift
+
+    case $cmd in
+        "")                      cmd_update ;;
+        -Syu|-Syyu|-Suy|update|up|upgrade)
+                                 cmd_update "$@" ;;
+        -S|-S[!sSiyu]*|install|in)
+                                 # -S, -Sw, -Sdd ... (but not -Ss/-Si/-Sy...)
+                                 if [[ $cmd == -S* && $cmd != -S ]]; then
+                                     cmd_install_flags "$cmd" "$@"
+                                 else
+                                     cmd_install "$@"
+                                 fi ;;
+        -Ss|search|s)            cmd_search "$@" ;;
+        -Si|info|i)              cmd_info "$@" ;;
+        -Sy)                     pac_root -Sy "$@" ;;
+        -R*|remove|rm)           cmd_remove "$cmd" "$@" ;;
+        -Q*|-F*|-D*|-T*|-U*)     cmd_passthrough "$cmd" "$@" ;;
+        components|comp|c)       cmd_components "$@" ;;
+        fix)                     cmd_fix "$@" ;;
+        repo)                    cmd_repo "$@" ;;
+        doctor|dr)               cmd_doctor "$@" ;;
+        profile)                 cmd_profile "$@" ;;
+        lang|language)           cmd_lang "$@" ;;
+        clean)                   cmd_clean "$@" ;;
+        -V|--version|version)    printf 'vtx %s\n' "$VTX_VERSION" ;;
+        -h|--help|help)          cmd_help ;;
+        *)
+            # anything that looks like package names: install them
+            if [[ $cmd != -* ]]; then
+                cmd_install "$cmd" "$@"
+            else
+                die_f "unknown option: %s (see: vtx --help)" "$cmd"
+            fi ;;
+    esac
+}
+
+main "$@"
